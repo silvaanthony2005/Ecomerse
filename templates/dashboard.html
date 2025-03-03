@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block title %}EduCursos - Panel de Control{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <nav class="sidebar">
+        <div class="user-info">
+            <img src="{{ url_for('static', filename='img/default_profile.jpg') }}" alt="Perfil">
+            <div class="user-details">
+                <div class="user-name">{{ user.name_surname }}</div>
+                <div class="user-email">{{ user.email_user }}</div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" data-section="perfil" class="active">Mi Perfil</a></li>
+            <li><a href="#" data-section="usuarios">Gestión de Usuarios</a></li>
+            <li><a href="#" data-section="administradores">Gestión de Administradores</a></li>
+            <li><a href="#" data-section="cursos">Gestión de Cursos</a></li>
+            <li><a href="#" data-section="reportes">Reportes</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section id="perfil" class="section active">
+            <h2>Mi Perfil</h2>
+            <form action="{{ url_for('update_profile') }}" method="post" class="profile-form">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ user.name_surname }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ user.email_user }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Teléfono:</label>
+                    <input type="text" id="phone" name="phone" value="{{ user.phone }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="current_password">Contraseña actual:</label>
+                    <input type="password" id="current_password" name="current_password" required>
+                </div>
+                <div class="form-group">
+                    <label for="new_password">Nueva contraseña (opcional):</label>
+                    <input type="password" id="new_password" name="new_password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirmar nueva contraseña:</label>
+                    <input type="password" id="confirm_password" name="confirm_password">
+                </div>
+                <button type="submit">Actualizar Perfil</button>
+            </form>
+        </section>
+
+        <section id="usuarios" class="section">
+            <h2>Gestión de Usuarios</h2>
+            
+            <!-- Botón para añadir nuevo usuario -->
+            <button onclick="showAddUserModal()" class="btn-primary mb-3">Añadir Usuario</button>
+
+            <div class="table-container">
+                <table id="usuarios-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr data-id="{{ usuario.id }}">
+                            <td>{{ usuario.name_surname }}</td>
+                            <td>{{ usuario.email_user }}</td>
+                            <td>{{ usuario.phone }}</td>
+                            <td class="actions-cell">
+                                <button type="button" class="btn-edit" onclick="showEditUserModal('{{ usuario.id }}', '{{ usuario.name_surname }}', '{{ usuario.email_user }}', '{{ usuario.phone }}')">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button type="button" class="btn-delete" onclick="eliminarUsuario('{{ usuario.id }}')">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="administradores" class="section">
+            <h2>Gestión de Administradores</h2>
+            <div class="table-container">
+                <table id="administradores-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Fecha de registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for admin in administradores %}
+                        <tr data-id="{{ admin.id }}">
+                            <td>{{ admin.name_surname }}</td>
+                            <td>{{ admin.email_user }}</td>
+                            <td>{{ admin.phone }}</td>
+                            <td>{{ admin.created_user }}</td>
+                            <td class="actions-cell">
+                                <button type="button" class="btn-delete" onclick="eliminarAdministrador('{{ admin.id }}')">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="cursos" class="section">
+            <h2>Gestión de Cursos</h2>
+            <div class="actions">
+                <button onclick="showModalCurso('add-curso-modal')" class="btn-primary">Añadir Curso</button>
+            </div>
+            <div class="table-container">
+                <table id="cursos-table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>Precio</th>
+                            <th>Categoría</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for curso in cursos %}
+                        <tr data-id="{{ curso.id }}">
+                            <td>
+                                <img src="{{ url_for('curso_imagen', id_curso=curso.id) }}" 
+                                    alt="{{ curso.titulo }}" 
+                                    style="width: 50px; height: 50px; object-fit: cover;">
+                            </td>
+                            <td>{{ curso.titulo }}</td>
+                            <td>{{ curso.descripcion }}</td>
+                            <td>${{ "%.2f"|format(curso.precio) }}</td>
+                            <td>{{ curso.categoria }}</td>
+                            <td class="actions-cell">
+                                <button type="button" class="btn-edit" onclick="editarCurso('{{ curso.id }}')">
+                                    <i class="fas fa-edit"></i> Editar
+                                </button>
+                                <button type="button" class="btn-delete" onclick="eliminarCurso('{{ curso.id }}')">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="reportes" class="section">
+            <h2>Reportes</h2>
+            <div class="reports-container">
+                <div class="report-card">
+                    <h3>Reporte de Usuarios</h3>
+                    <p>Exportar lista completa de usuarios</p>
+                    <button onclick="exportarReporteUsuarios()" class="btn-primary">Exportar a Excel</button>
+                </div>
+                <div class="report-card">
+                    <h3>Reporte de Administradores</h3>
+                    <p>Exportar lista de administradores del sistema</p>
+                    <button onclick="exportarReporteAdministradores()" class="btn-primary">Exportar a Excel</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- Modal para añadir curso -->
+<div id="add-curso-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Añadir Curso</h2>
+        <form id="curso-form" action="{{ url_for('nuevo_curso') }}" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="curso_id" name="curso_id">
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="Programación">Programación</option>
+                    <option value="Diseño">Diseño</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Negocios">Negocios</option>
+                    <option value="Desarrollo Personal">Desarrollo Personal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" name="imagen" accept="image/*">
+            </div>
+            <button type="submit" class="btn-primary">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para editar usuario -->
+<div id="edit-user-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Editar Usuario</h2>
+        <form id="edit-user-form" action="{{ url_for('edit_user', user_id=0) }}" method="post">
+            <input type="hidden" id="edit_user_id" name="user_id">
+            <div class="form-group">
+                <label for="edit_user_name">Nombre:</label>
+                <input type="text" id="edit_user_name" name="user_name" required>
+            </div>
+            <div class="form-group">
+                <label for="edit_user_email">Email:</label>
+                <input type="email" id="edit_user_email" name="user_email" required>
+            </div>
+            <div class="form-group">
+                <label for="edit_user_phone">Teléfono:</label>
+                <input type="text" id="edit_user_phone" name="user_phone" required>
+            </div>
+            <button type="submit" class="btn-primary">Guardar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal para añadir usuario -->
+<div id="add-user-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Añadir Usuario</h2>
+        <form id="add-user-form" action="{{ url_for('add_user') }}" method="post">
+            <div class="form-group">
+                <label for="add_user_name">Nombre:</label>
+                <input type="text" id="add_user_name" name="user_name" required>
+            </div>
+            <div class="form-group">
+                <label for="add_user_email">Email:</label>
+                <input type="email" id="add_user_email" name="user_email" required>
+            </div>
+            <div class="form-group">
+                <label for="add_user_phone">Teléfono:</label>
+                <input type="tel" id="add_user_phone" name="user_phone" required>
+            </div>
+            <div class="form-group">
+                <label for="add_user_role">Rol:</label>
+                <select id="add_user_role" name="user_role" required>
+                    <option value="user">Usuario</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}EduCursos - Inicio{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Banner Principal -->
+<div class="container-fluid bg-primary">
+    <div class="container">
+        <h1>Bienvenido a EduCursos</h1>
+        <p class="lead">Tu plataforma de aprendizaje en línea</p>
+    </div>
+</div>
+
+<!-- Barra de búsqueda y filtros -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form id="searchForm" class="input-group">
+                <input type="text" id="searchInput" class="form-control" placeholder="Buscar cursos...">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <select id="filterSelect" class="form-select">
+                <option value="recent">Más recientes</option>
+                <option value="price_asc">Precio: Menor a Mayor</option>
+                <option value="price_desc">Precio: Mayor a Menor</option>
+                <option value="programming">Programación</option>
+                <option value="web">Desarrollo Web</option>
+                <option value="data">Ciencia de Datos</option>
+                <option value="design">Diseño</option>
+                <option value="marketing">Marketing</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de Cursos -->
+<div class="container my-5">
+    <h2 class="text-center mb-4">Nuestros Cursos</h2>
+    <div class="row" id="cursosContainer">
+        {% for curso in cursos %}
+        <div class="col-md-4 mb-4">
+            <div class="card curso-card">
+                <img src="{{ url_for('static', filename='images/' + curso.imagen_nombre) }}" 
+                     class="card-img-top" alt="{{ curso.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ curso.titulo }}</h5>
+                    <p class="card-text">{{ curso.descripcion }}</p>
+                    <p class="card-text"><strong>${{ "%.2f"|format(curso.precio) }}</strong></p>
+                    {% if session.get('user_role') == 'user' %}
+                        <button onclick="registrarEnCurso('{{ curso.id }}')" class="btn btn-primary w-100">
+                            Registrarse
+                        </button>
+                    {% else %}
+                        <button disabled class="btn btn-secondary w-100">
+                            Registrarse (Solo para usuarios)
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="loadingIndicator" class="loading-indicator">
+    <i class="fas fa-spinner fa-spin"></i> Filtrando cursos...
+</div>
+
+<!-- Sección de Contacto -->
+<div id="contacto" class="container my-5">
+    <h2 class="text-center mb-4">Contáctame</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <form>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="mensaje" class="form-label">Mensaje</label>
+                    <textarea class="form-control" id="mensaje" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Información de Contacto</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Dirección: Caracas, Venezuela</p>
+            <p><i class="fas fa-phone"></i> Teléfono: +58 123-456-7890</p>
+            <p><i class="fas fa-envelope"></i> Email: info@educursos.com</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/cursos.js') }}"></script>
+{% endblock %}

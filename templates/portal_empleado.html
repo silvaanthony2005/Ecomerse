@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}EduCursos - Portal del Empleado{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/portal_empleado.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="portal-empleado-content">
+    <div class="container">
+        <h1 class="mb-4">Bienvenido, {{ empleado.name_surname }}</h1>
+        <p>Email: {{ empleado.email_user }}</p>
+        <p>Teléfono: {{ empleado.phone }}</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="profile-section">
+            <h2>Mis Datos</h2>
+            <form action="{{ url_for('update_empleado_profile') }}" method="post">
+                <div class="form-group row">
+                    <label for="name_surname" class="form-label col-sm-2">Nombre completo:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="name_surname" name="name_surname" class="form-control" value="{{ empleado.name_surname }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="form-label col-sm-2">Email:</label>
+                    <div class="col-sm-10">
+                        <input type="email" id="email" name="email" class="form-control" value="{{ empleado.email_user }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="phone" class="form-label col-sm-2">Teléfono:</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="phone" name="phone" class="form-control" value="{{ empleado.phone }}" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="current_password" class="form-label col-sm-2">Contraseña actual:</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="current_password" name="current_password" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="new_password" class="form-label col-sm-2">Nueva contraseña (opcional):</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="new_password" name="new_password" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="confirm_password" class="form-label col-sm-2">Confirmar nueva contraseña:</label>
+                    <div class="col-sm-10">
+                        <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10 offset-sm-2">
+                        <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Mis Cursos Inscritos</h2>
+    <div class="row">
+        {% for inscripcion in inscripciones %}
+        <div class="col-md-3">
+            <div class="card curso-card">
+                <img src="{{ url_for('static', filename='images/' + inscripcion.imagen_nombre) }}" 
+                     class="card-img-top" alt="{{ inscripcion.titulo }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ inscripcion.titulo }}</h5>
+                    <p class="card-text">{{ inscripcion.descripcion }}</p>
+                    <p class="card-text"><strong>${{ "%.2f"|format(inscripcion.precio) }}</strong></p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center">
+            <p>No estás inscrito en ningún curso.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

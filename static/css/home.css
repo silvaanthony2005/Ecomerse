@@ -1,0 +1,263 @@
+/* Estilos generales para el cuerpo de la página */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-color);
+    color: #333;
+}
+
+/* Estilos para el banner principal */
+.container-fluid.bg-primary {
+    background: linear-gradient(135deg, #0d47a1 0%, #1e88e5 100%);
+    padding: 150px 0;
+    clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+    margin-bottom: 4rem;
+    color: white;
+}
+
+/* Estilos para el título del banner */
+.container-fluid.bg-primary h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Estilos para el texto secundario del banner */
+.container-fluid.bg-primary .lead {
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    color: white;
+}
+
+/* Estilos para la barra de búsqueda y filtros */
+#searchForm {
+    margin-bottom: 30px;
+}
+
+/* Estilos para el campo de búsqueda */
+#searchInput {
+    border-radius: 25px 0 0 25px;
+    padding: 15px 20px;
+    border: 2px solid #e9ecef;
+    border-right: none;
+}
+
+/* Estilos para el campo de búsqueda cuando está enfocado */
+#searchInput:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+/* Estilos para el selector de filtros */
+#filterSelect {
+    border-radius: 25px;
+    padding: 10px 15px;
+    border: 2px solid #e9ecef;
+}
+
+/* Estilos para el botón de búsqueda */
+.search-container button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Estilos para el botón de búsqueda al pasar el ratón */
+.search-container button:hover {
+    background: linear-gradient(135deg, #0b3d91, #1155a0);
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* Estilos para el contenedor de cursos */
+#cursosContainer {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-top: -100px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Estilos para las tarjetas de cursos */
+.curso-card {
+    background: white;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Estilos para las tarjetas de cursos al pasar el ratón */
+.curso-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(13, 71, 161, 0.2);
+}
+
+/* Estilos para las imágenes de las tarjetas de cursos */
+.card-img-top {
+    height: 180px;
+    object-fit: contain;
+}
+
+/* Estilos para el cuerpo de las tarjetas de cursos */
+.card-body {
+    padding: 20px;
+}
+
+/* Estilos para el título de las tarjetas de cursos */
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* Estilos para el texto de las tarjetas de cursos */
+.card-text {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+/* Estilos para el texto fuerte dentro de las tarjetas de cursos */
+.card-text strong {
+    color: #2575fc;
+    font-size: 1.1rem;
+}
+
+/* Estilos para los botones primarios */
+.btn-primary {
+    background: linear-gradient(135deg, #0d47a1 0%, #1e88e5 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+/* Estilos para los botones primarios al pasar el ratón */
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0b3d91 0%, #1565c0 100%);
+    box-shadow: 0 4px 12px rgba(13, 71, 161, 0.4);
+    transform: none;
+}
+
+/* Estilos para los botones secundarios */
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+/* Estilos para el indicador de carga */
+.loading-indicator {
+    display: none;
+    text-align: center;
+    margin: 20px 0;
+    color: #6a11cb;
+    font-size: 1.1rem;
+}
+
+/* Estilos para el indicador de carga cuando está activo */
+.loading-indicator.active {
+    display: block;
+}
+
+/* Estilos para la sección de contacto */
+#contacto {
+    text-align: center;
+    margin: 4rem auto;
+    max-width: 800px;
+    background: white;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 24px rgba(13, 71, 161, 0.1);
+    padding: 3rem;
+    border-radius: 20px;
+}
+
+/* Estilos para el título de la sección de contacto */
+#contacto h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+/* Estilos para el formulario de contacto */
+#contacto form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Estilos para los campos de entrada del formulario de contacto */
+#contacto .form-control {
+    margin-bottom: 1rem;
+    border-radius: 25px;
+    padding: 10px 15px;
+    border: 2px solid #e9ecef;
+}
+
+/* Estilos para los campos de entrada del formulario de contacto cuando están enfocados */
+#contacto .form-control:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+}
+
+/* Estilos para el botón primario en la sección de contacto */
+#contacto .btn-primary {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Estilos para el subtítulo de la sección de contacto */
+#contacto h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+/* Estilos para el texto de la sección de contacto */
+#contacto p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+/* Estilos para los íconos en la sección de contacto */
+#contacto i {
+    color: var(--primary-color);
+    background: rgba(13, 71, 161, 0.1);
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    line-height: 1rem;
+    margin-right: 0.5rem;
+}
+
+/* Estilos para diseño responsivo */
+@media (max-width: 768px) {
+    .container-fluid.bg-primary h1 {
+        font-size: 2.5rem;
+    }
+    
+    .container-fluid.bg-primary .lead {
+        font-size: 1.2rem;
+    }
+    
+    .curso-card {
+        margin-bottom: 15px;
+    }
+} 

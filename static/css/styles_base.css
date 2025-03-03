@@ -1,0 +1,313 @@
+/* Variables globales */
+:root {
+    --primary-color: #0d47a1;  /* Azul oscuro intenso */
+    --secondary-color: #1565c0;  /* Azul medio */
+    --success-color: #2e7d32;  /* Verde oscuro */
+    --error-color: #c62828;  /* Rojo oscuro */
+    --background-color: #f5f5f5;  /* Gris muy claro */
+    --text-color: #212121;  /* Casi negro */
+    --border-color: #bdbdbd;  /* Gris medio */
+    --shadow-color: rgba(33, 33, 33, 0.3);  /* Sombra más oscura */
+    --navbar-height: 70px;
+    --footer-height: 250px;
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: var(--navbar-height); /* Espacio para el navbar fijo */
+}
+
+/* Layout principal */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Formularios */
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Modales */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 2rem auto;
+    padding: 1rem;
+    border-radius: 0.3rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 0.5rem 1rem var(--shadow-color);
+}
+
+.close {
+    position: absolute;
+    right: 1rem;
+    top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+
+/* Alertas */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Navbar */
+.navbar {
+    height: var(--navbar-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, #0d47a1 0%, #1e88e5 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.navbar-dark {
+    color: white;
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link {
+    color: white !important;
+}
+
+.navbar-dark .nav-link:hover {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.nav-link {
+    font-weight: 500;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Ajustes para el responsive del navbar */
+@media (max-width: 768px) {
+    .navbar {
+        position: fixed; /* Mantenemos la posición fija */
+        height: auto; /* Altura automática */
+    }
+
+    .navbar-collapse {
+        background-color: #343a40; /* Fondo para el menú desplegable */
+        padding: 1rem;
+        margin-top: 0.5rem;
+        border-radius: 0.25rem;
+        max-height: 80vh; /* Limitar la altura máxima del menú desplegable */
+        overflow-y: auto; /* Añadir scroll si el contenido es muy largo */
+    }
+
+    .navbar-nav {
+        margin-top: 0.5rem;
+    }
+
+    .nav-item {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Footer */
+.footer {
+    background: linear-gradient(135deg, #0d47a1 0%, #1e88e5 100%);
+    padding: 4rem 0 2rem 0;
+    margin-top: 4rem;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.footer h3 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+}
+
+.footer p, .footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.footer i {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    line-height: 1rem;
+    margin-right: 0.5rem;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
+
+/* Contenedor principal */
+.main-content {
+    position: static;
+    min-height: calc(100vh - var(--navbar-height));
+}
+
+/* Ajustes específicos para el portal de empleados */
+.portal-empleado-content {
+    flex: 1;
+    padding: 2rem 0;
+}
+
+/* Ajustes para el dashboard */
+.dashboard-container {
+    margin-top: -56px; /* Compensar el margin-top del main-content */
+}
+
+/* Ajustes para el mapa en el footer */
+.footer-map {
+    height: 150px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Ajustar el contenedor del mapa */
+.footer .col-md-4:last-child {
+    flex: 0 0 100%;  /* Hacer que ocupe todo el ancho */
+    max-width: 100%;
+    margin-top: 2rem;
+}
+
+/* Asegurar que el mapa sea responsive */
+@media (max-width: 768px) {
+    .footer-map {
+        height: 150px;
+        margin-bottom: 1rem;
+    }
+}

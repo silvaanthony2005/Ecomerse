@@ -558,4 +558,4 @@ def registrar_curso(curso_id):
     return redirect(url_for('portal_empleado'))  # Redirigir al portal del empleado
 
 if __name__ == '__main__':          #se verifica si estamos en el archivo inicial
-    app.run(debug=True, port= 300)             #lanzar app con el debug activado, o sea ver los cambios mientras se hace
+    app.run(debug=True)             #lanzar app con el debug activado, o sea ver los cambios mientras se hace
